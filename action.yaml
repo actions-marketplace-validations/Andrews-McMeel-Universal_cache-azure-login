@@ -18,7 +18,9 @@ runs:
       id: hash
       shell: bash
       run: |
-        echo "azure-credentials-hash=$(echo ${{ inputs.azureCredentials }} | md5sum - | awk '{print $1}')" >> $GITHUB_OUTPUT
+        AZURE_CREDENTIALS="${{ inputs.azureCredentials }}"
+        AZURE_CREDENTIALS_HASH=$(echo "${AZURE_CREDENTIALS}" | md5sum - | awk '{print $1}')
+        echo "azure-credentials-hash=${AZURE_CREDENTIALS_HASH}" >> $GITHUB_OUTPUT
 
     - name: Cache Azure credentials
       id: azure-cache
