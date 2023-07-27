@@ -1,12 +1,37 @@
-name: Default GitHub Action
+name: Cache Azure Login
 
-description: Default GitHub Action that outputs "Hello World"
+description: Login to Azure and Cache Credentials
+
+inputs:
+  azureCredentials:
+    description: "Credentials to login to Azure"
+    required: true
 
 branding:
-  color: purple
-  icon: unlock
+  color: blue
+  icon: log-in
+
 runs:
   using: "composite"
   steps:
-    - run: echo "Hello World" >> $GITHUB_OUTPUT
+    - name: Hash azureCredentials secret
+      id: hash
       shell: bash
+      run: |
+        echo "azure-credentials-hash=$(echo ${{ inputs.azureCredentials }} | md5sum - | awk '{print $1}')" >> $GITHUB_OUTPUT
+
+    - name: Cache Azure credentials
+      id: azure-cache
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.Azure
+          ${{ github.workspace }}/.Azure
+        key: ${{ runner.os }}-azurecreds-${{ steps.hash.outputs.azure-credentials-hash }}
+
+    - name: Login via Az module
+      if: steps.azure-cache.outputs.cache-hit != 'true'
+      uses: azure/login@v1
+      with:
+        creds: "${{ inputs.azureCredentials }}"
+        enable-AzPSSession: true
