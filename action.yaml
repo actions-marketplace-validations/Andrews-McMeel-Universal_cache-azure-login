@@ -39,4 +39,4 @@ runs:
       uses: azure/login@v1
       with:
         creds: "${{ inputs.azureCredentials }}"
-        enable-AzPSSession: ${{ inputs.enableAzPsSession || "true" }}
+        enable-AzPSSession: ${{ inputs.enableAzPsSession || true }}
