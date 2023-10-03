@@ -6,10 +6,9 @@ inputs:
   azureCredentials:
     description: "Credentials to login to Azure"
     required: true
-  enablePsSession:
-    description: "Enable PS Session"
+  enable-AzPsSession:
+    description: "Enable Azure PS Session"
     required: false
-    default: "true"
 
 branding:
   color: blue
@@ -40,4 +39,4 @@ runs:
       uses: azure/login@v1
       with:
         creds: "${{ inputs.azureCredentials }}"
-        enable-AzPSSession: ${{ inputs.enablePsSession }}
+        enable-AzPSSession: ${{ inputs.enableAzPsSession || "true" }}
