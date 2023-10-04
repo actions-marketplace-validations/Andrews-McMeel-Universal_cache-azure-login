@@ -31,7 +31,9 @@ runs:
       with:
         path: |
           ~/.Azure
+          ~/.azure
           ${{ github.workspace }}/.Azure
+          ${{ github.workspace }}/.azure
         key: ${{ runner.os }}-azurecreds-${{ steps.hash.outputs.azure-credentials-hash }}
 
     - name: Login via Az module
