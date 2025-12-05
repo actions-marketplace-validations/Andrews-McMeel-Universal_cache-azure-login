@@ -14,6 +14,6 @@ To make `cache-azure-login` a part of your workflow, just add a step to one of y
 
 ## Options
 
-| Variable | Description | Required | `[Default]`  |
-| --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------: | ------------------------------------- |
-| `azureCredentials` | Azure Login Credentials | x | N/A |
+| Variable           | Description             | Required | `[Default]` |
+| ------------------ | ----------------------- | :------: | ----------- |
+| `azureCredentials` | Azure Login Credentials |    x     | N/A         |

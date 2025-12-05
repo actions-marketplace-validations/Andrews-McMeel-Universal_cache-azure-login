@@ -6,6 +6,9 @@ inputs:
   azureCredentials:
     description: "Credentials to login to Azure"
     required: true
+  enable-AzPsSession:
+    description: "Enable Azure PS Session"
+    required: false
 
 branding:
   color: blue
@@ -28,7 +31,9 @@ runs:
       with:
         path: |
           ~/.Azure
+          ~/.azure
           ${{ github.workspace }}/.Azure
+          ${{ github.workspace }}/.azure
         key: ${{ runner.os }}-azurecreds-${{ steps.hash.outputs.azure-credentials-hash }}
 
     - name: Login via Az module
@@ -36,4 +41,4 @@ runs:
       uses: azure/login@v1
       with:
         creds: "${{ inputs.azureCredentials }}"
-        enable-AzPSSession: true
+        enable-AzPSSession: ${{ inputs.enable-AzPsSession || true }}
